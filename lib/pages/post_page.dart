@@ -1,4 +1,9 @@
+import 'dart:ffi';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:networking/providers/request_provider.dart';
+import 'package:provider/provider.dart';
 
 class PostPage extends StatelessWidget {
   const PostPage({super.key});
@@ -9,6 +14,8 @@ class PostPage extends StatelessWidget {
     final titleTextController = TextEditingController();
     final contentTextController = TextEditingController();
 
+    var responseBodyToRead = "Response body del request";
+
     return Scaffold(
       body: Container(
         padding: EdgeInsets.fromLTRB(40, 100, 40, 40),
@@ -17,15 +24,15 @@ class PostPage extends StatelessWidget {
           children: [
             TextField(
               controller: userIdTextController,
-              decoration: InputDecoration(hintText: "User Id"),
+              decoration: const InputDecoration(hintText: "User Id"),
             ),
             TextField(
               controller: titleTextController,
-              decoration: InputDecoration(hintText: "Title"),
+              decoration: const InputDecoration(hintText: "Title"),
             ),
             TextField(
               controller: contentTextController,
-              decoration: InputDecoration(hintText: "Content"),
+              decoration: const InputDecoration(hintText: "Content"),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -40,13 +47,23 @@ class PostPage extends StatelessWidget {
                     child: const Text("Limpiar todo")),
                 MaterialButton(
                     color: Colors.blue,
-                    onPressed: () {},
+                    onPressed: () async {
+                      var data;
+                      data.title = titleTextController.text;
+                      data.body = contentTextController.text;
+                      data.userId = userIdTextController.text;
+                      var response = await data.context
+                          .read<RequestProvider>()
+                          .postToAPI(data);
+                    },
                     child: const Text("Postear")),
               ],
             ),
             Text(
-              "Response body del request",
-              style: TextStyle(),
+              responseBodyToRead,
+              style: const TextStyle(
+                fontFeatures: [FontFeature.tabularFigures()],
+              ),
             )
           ],
         ),
