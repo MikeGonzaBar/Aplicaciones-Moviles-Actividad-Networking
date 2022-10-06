@@ -32,7 +32,11 @@ class PostPage extends StatelessWidget {
               children: [
                 MaterialButton(
                     color: Colors.blue,
-                    onPressed: () {},
+                    onPressed: () {
+                      userIdTextController.clear();
+                      titleTextController.clear();
+                      contentTextController.clear();
+                    },
                     child: const Text("Limpiar todo")),
                 MaterialButton(
                     color: Colors.blue,
