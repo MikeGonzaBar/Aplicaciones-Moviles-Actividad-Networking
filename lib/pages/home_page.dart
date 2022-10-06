@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:networking/pages/get_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,7 +16,13 @@ class HomePage extends StatelessWidget {
           children: [
             MaterialButton(
               color: Colors.grey[700],
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  (MaterialPageRoute(
+                    builder: (context) => GetPage(),
+                  )),
+                );
+              },
               child: Text(
                 "Leer posts",
                 style: TextStyle(color: Colors.white),
