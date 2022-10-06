@@ -1,13 +1,21 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:http/http.dart' as http;
 
 class RequestProvider with ChangeNotifier {
-  List<dynamic> _reqList = [];
-  dynamic _resp = {};
+  List<dynamic> _reqList = [
+    {
+      "userId": 1,
+      "id": 1,
+      "title":
+          "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+      "body":
+          "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+    }
+  ];
+
   final _usersEndpoint = "https://jsonplaceholder.typicode.com/posts";
   List<dynamic> get getReqList => _reqList;
 
@@ -35,11 +43,10 @@ class RequestProvider with ChangeNotifier {
       var response = await http.post(Uri.parse(_usersEndpoint), body: body);
       if (response.statusCode == 200) {
         var content = jsonDecode(response.body);
-        _resp = content;
+        _reqList = content;
         notifyListeners();
       }
     } catch (e) {
-      _resp = {};
       notifyListeners();
     }
   }
