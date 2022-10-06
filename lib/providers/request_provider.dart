@@ -11,7 +11,7 @@ class RequestProvider with ChangeNotifier {
   final _usersEndpoint = "https://jsonplaceholder.typicode.com/posts";
   List<dynamic> get getReqList => _reqList;
 
-  Future<dynamic> getUsers() async {
+  Future<dynamic> getReqs() async {
     try {
       var response = await http.get(Uri.parse(_usersEndpoint));
       if (response.statusCode == 200) {
